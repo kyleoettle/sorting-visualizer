@@ -10,6 +10,16 @@ const ARRAY_MIN_VALUE = 5;
 const PRIMARY_COLOR = 'turquoise';
 const SECONDARY_COLOR = 'red';
 
+/*
+
+TODO:
+Add additional sorting algorithms
+Improve comparison and replace coloring
+Slider to specify array size
+Slider to increase / decrease speed
+
+*/
+
 const SortingVisualizer = () => {
 
     const [dataArray, setDataArray] = React.useState(generateValuesArray);
