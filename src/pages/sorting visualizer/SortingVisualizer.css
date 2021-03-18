@@ -1,13 +1,17 @@
-  
 .array-container {
     position: absolute;
     left: 100px;
-    /* top: 100px; */
+    top: 100px;
   }
   
   .array-bar {
-    width: 3px;
+    width: 30px;
     display: inline-block;
     margin: 0 1px;
     background-color: turquoise;
+  }
+
+  .array-bar-text {
+    position: absolute;
+    bottom: 0;
   }
