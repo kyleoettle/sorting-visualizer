@@ -3,7 +3,7 @@ import './SortingVisualizer.css'
 import { getNewMergeSortAnimation, createArray } from '../../algorithms/mergeSort'
 
 const ANIMATION_SPEED_MS = 15;
-const ARRAY_BARS_COUNT = 250;
+const ARRAY_BARS_COUNT = 150;
 
 
 const PRIMARY_COLOR = 'turquoise';
