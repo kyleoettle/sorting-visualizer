@@ -7,13 +7,18 @@ const ARRAY_BARS_COUNT = 50;
 
 
 const PRIMARY_COLOR = 'turquoise';
+const COMPARE_COLOR = 'red';
+const STAY_COLOR = 'green';
+const SHIFT_COLOR = 'yellow';
+
 const SECONDARY_COLOR = 'red';
 
 /*
 
 TODO:
+cleanup code comments
+Improve comparison and replace coloring - yellow bars remaining
 Add additional sorting algorithms
-Improve comparison and replace coloring
 Slider to specify array size
 Slider to increase / decrease speed
 
@@ -74,8 +79,8 @@ const SortingVisualizer = () => {
                 const barOneStyle = arrayBars[leftIdx].style;
                 const barTwoStyle = arrayBars[rightIdx].style;
                 setTimeout(() => {
-                    barOneStyle.backgroundColor = SECONDARY_COLOR;
-                    barTwoStyle.backgroundColor = SECONDARY_COLOR;
+                    barOneStyle.backgroundColor = COMPARE_COLOR;
+                    barTwoStyle.backgroundColor = COMPARE_COLOR;
                 }, i * ANIMATION_SPEED_MS);
             }
             if (action === 'compareEnd') {
@@ -85,6 +90,47 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = PRIMARY_COLOR;
                     barTwoStyle.backgroundColor = PRIMARY_COLOR;
+                }, i * ANIMATION_SPEED_MS);
+            }
+
+            if (action === 'stayStart') {
+                const { idx } = animation;
+                const barOneStyle = arrayBars[idx].style;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = STAY_COLOR;
+                }, i * ANIMATION_SPEED_MS);
+            }
+            if (action === 'stayEnd') {
+                const { idx } = animation;
+                const barOneStyle = arrayBars[idx].style;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = PRIMARY_COLOR;
+                }, i * ANIMATION_SPEED_MS);
+            }
+            //shift start should highlite that there needs to be a shift, that's all
+            //shift end should move the lower node in to the correct position and remove it from it's old position
+            if (action === 'shiftStart') {
+
+                const { oldIdx, newIdx } = animation;
+                const barOneStyle = arrayBars[oldIdx].style;
+                const barTwoStyle = arrayBars[newIdx].style;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = SHIFT_COLOR;
+                    barTwoStyle.backgroundColor = SHIFT_COLOR;
+                }, i * ANIMATION_SPEED_MS);
+            }
+            if (action === 'shiftEnd') {
+                const { oldIdx, newIdx } = animation;
+
+                setTimeout(() => {
+                    const oldBar = arrayBars[oldIdx];
+                    const newBar = arrayBars[newIdx];
+                    const barOneStyle = newBar.style;
+                    const barTwoStyle = oldBar.style;
+                    barOneStyle.backgroundColor = PRIMARY_COLOR;
+                    barTwoStyle.backgroundColor = PRIMARY_COLOR;
+                    arrayBars[oldIdx].remove();
+                    newBar.parentNode.insertBefore(oldBar, newBar);
                 }, i * ANIMATION_SPEED_MS);
             }
 
@@ -161,7 +207,7 @@ const SortingVisualizer = () => {
                 {dataArray.map((node) => {
                     return (
                         <div className="array-bar" key={node.idx} style={{ height: `${node.value}px` }}>
-                            <div className="array-bar-text">{node.value}</div>
+                            {/* <div className="array-bar-text">{node.value}</div> */}
                         </div>
                     );
                 })}

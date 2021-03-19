@@ -59,13 +59,15 @@ function mergeNew(left, right, originalArray, animations) {
             const node = left.shift();
             arr.push(node);
             //if the smaller value is already on the left hand side, we don't need to do a shift
-            animations.push(createStayAnimation(node, "stay"))
+            animations.push(createStayAnimation(node, "stayStart"))
+            animations.push(createStayAnimation(node, "stayEnd"))
         } else {
             //the larger value is before the smaller value, so add the smaller value to the array
             const node = right.shift();
             const newLeftIdx = leftNode.idx;
             arr.push(node);
-            animations.push(createShiftAnimation(node, newLeftIdx, "shift"))
+            animations.push(createShiftAnimation(node, newLeftIdx, "shiftStart"))
+            animations.push(createShiftAnimation(node, newLeftIdx, "shiftEnd"))
             left.forEach(n => {
                 n.idx++;
             });
@@ -78,7 +80,6 @@ function mergeNew(left, right, originalArray, animations) {
 function createStayAnimation(node, action) {
     return { idx: node.idx, value: node.value, action, msg: "The node on the left hand side is smaller than the node on the right hand side and values shouldn't move." };
 }
-
 
 function createShiftAnimation(node, newIdx, action) {
     return {
