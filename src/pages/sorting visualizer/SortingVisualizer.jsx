@@ -1,6 +1,6 @@
 import React from 'react';
 import './SortingVisualizer.css'
-import { getMergeSortAnimations, mergeSort, getNewMergeSortAnimation, createArray } from '../../algorithms/mergeSort'
+import { getNewMergeSortAnimation, createArray } from '../../algorithms/mergeSort'
 
 const ANIMATION_SPEED_MS = 15;
 const ARRAY_BARS_COUNT = 250;
@@ -8,10 +8,10 @@ const ARRAY_BARS_COUNT = 250;
 
 const PRIMARY_COLOR = 'turquoise';
 const COMPARE_COLOR = 'red';
-const STAY_COLOR = 'green';
+// const STAY_COLOR = 'green';
 const SHIFT_COLOR = 'yellow';
 
-const SECONDARY_COLOR = 'red';
+// const SECONDARY_COLOR = 'red';
 
 /*
 
@@ -35,10 +35,6 @@ const SortingVisualizer = () => {
 
     function resetValuesArray() {
         setDataArray(generateValuesArray());
-    }
-
-    function getRandomValue(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     function mergeSortHandler() {
@@ -131,8 +127,8 @@ const SortingVisualizer = () => {
 
     function testSort() {
 
-        const array = createArray(100);
-        const sortedArray = getNewMergeSortAnimation(array.slice());
+        // const array = createArray(100);
+        // const sortedArray = getNewMergeSortAnimation(array.slice());
     }
 
     function quickSort() {
@@ -151,20 +147,20 @@ const SortingVisualizer = () => {
 
     }
 
-    function arraysAreEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) {
-            console.log(`lengths are not the same ${arr1.length} - ${arr2.length}`)
-            return false;
-        }
+    // function arraysAreEqual(arr1, arr2) {
+    //     if (arr1.length !== arr2.length) {
+    //         console.log(`lengths are not the same ${arr1.length} - ${arr2.length}`)
+    //         return false;
+    //     }
 
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) {
-                console.log(`values are not the same ${i} -  ${arr1[i]} - ${arr2[i]}`)
-                return false;
-            }
-        }
-        return true;
-    }
+    //     for (let i = 0; i < arr1.length; i++) {
+    //         if (arr1[i] !== arr2[i]) {
+    //             console.log(`values are not the same ${i} -  ${arr1[i]} - ${arr2[i]}`)
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
     return (
         <>
