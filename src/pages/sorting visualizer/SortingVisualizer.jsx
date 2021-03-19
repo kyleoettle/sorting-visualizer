@@ -1,6 +1,6 @@
 import React from 'react';
 import './SortingVisualizer.css'
-import { getNewMergeSortAnimation, createArray } from '../../algorithms/mergeSort'
+import { getMergeSortAnimation, createArray } from '../../algorithms/mergeSort'
 
 const ANIMATION_SPEED_MS = 15;
 const ARRAY_BARS_COUNT = 150;
@@ -17,7 +17,6 @@ const SHIFT_COLOR = 'yellow';
 
 TODO:
 cleanup code comments
-Improve comparison and replace coloring - yellow bars remaining
 Add additional sorting algorithms
 Slider to specify array size
 Slider to increase / decrease speed
@@ -29,7 +28,6 @@ const SortingVisualizer = () => {
     const [dataArray, setDataArray] = React.useState(generateValuesArray);
 
     function generateValuesArray() {
-
         return createArray(ARRAY_BARS_COUNT);
     }
 
@@ -38,7 +36,7 @@ const SortingVisualizer = () => {
     }
 
     function mergeSortHandler() {
-        const sortedArrayAnimations = getNewMergeSortAnimation(dataArray).animations;
+        const sortedArrayAnimations = getMergeSortAnimation(dataArray).animations;
         for (let i = 0; i < sortedArrayAnimations.length; i++) {
             const arrayBars = document.getElementsByClassName('array-bar');
             const animation = sortedArrayAnimations[i];
@@ -49,8 +47,14 @@ const SortingVisualizer = () => {
                 const barOneStyle = arrayBars[leftIdx].style;
                 const barTwoStyle = arrayBars[rightIdx].style;
                 setTimeout(() => {
-                    barOneStyle.backgroundColor = COMPARE_COLOR;
-                    barTwoStyle.backgroundColor = COMPARE_COLOR;
+                    if (animation.shift) {
+                        barOneStyle.backgroundColor = SHIFT_COLOR;
+                        barTwoStyle.backgroundColor = SHIFT_COLOR;
+                    } else {
+                        barOneStyle.backgroundColor = COMPARE_COLOR;
+                        barTwoStyle.backgroundColor = COMPARE_COLOR;
+                    }
+
                 }, i * ANIMATION_SPEED_MS);
             }
             if (action === 'compareEnd') {
@@ -64,17 +68,21 @@ const SortingVisualizer = () => {
             }
 
             if (action === 'stayStart') {
-                const { idx } = animation;
-                const barOneStyle = arrayBars[idx].style;
+                const { leftIdx, rightIdx } = animation;
+                const barOneStyle = arrayBars[leftIdx].style;
+                const barTwoStyle = arrayBars[rightIdx].style;
                 setTimeout(() => {
                     barOneStyle.backgroundColor = SHIFT_COLOR;
+                    barTwoStyle.backgroundColor = SHIFT_COLOR;
                 }, i * ANIMATION_SPEED_MS);
             }
             if (action === 'stayEnd') {
-                const { idx } = animation;
-                const barOneStyle = arrayBars[idx].style;
+                const { leftIdx, rightIdx } = animation;
+                const barOneStyle = arrayBars[leftIdx].style;
+                const barTwoStyle = arrayBars[rightIdx].style;
                 setTimeout(() => {
                     barOneStyle.backgroundColor = PRIMARY_COLOR;
+                    barTwoStyle.backgroundColor = PRIMARY_COLOR;
                 }, i * ANIMATION_SPEED_MS);
             }
             //shift start should highlite that there needs to be a shift, that's all
@@ -95,33 +103,10 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     const oldBar = arrayBars[oldIdx];
                     const newBar = arrayBars[newIdx];
-                    // const barOneStyle = newBar.style;
-                    // const barTwoStyle = oldBar.style;
-                    // barOneStyle.backgroundColor = PRIMARY_COLOR;
-                    // barTwoStyle.backgroundColor = PRIMARY_COLOR;
                     arrayBars[oldIdx].remove();
                     newBar.parentNode.insertBefore(oldBar, newBar);
                 }, i * ANIMATION_SPEED_MS);
             }
-
-            // if (isColorChange) {
-            //     const [barOneIdx, barTwoIdx] = sortedArrayAnimations[i];
-            //     const barOneStyle = arrayBars[barOneIdx].style;
-            //     const barTwoStyle = arrayBars[barTwoIdx].style;
-            //     const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-            //     setTimeout(() => {
-            //         barOneStyle.backgroundColor = color;
-            //         barTwoStyle.backgroundColor = color;
-            //     }, i * ANIMATION_SPEED_MS);
-            // } else {
-            //     setTimeout(() => {
-            //         const [barOneIdx, newHeight] = sortedArrayAnimations[i];
-            //         const barOneStyle = arrayBars[barOneIdx].style;
-            //         barOneStyle.height = `${newHeight}px`;
-            //         arrayBars[barOneIdx].firstChild.textContent = newHeight;
-            //     }, i * ANIMATION_SPEED_MS);
-            // }
-
         }
     }
 
