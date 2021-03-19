@@ -66,7 +66,7 @@ function mergeNew(left, right, originalArray, animations) {
             const node = right.shift();
             const newLeftIdx = leftNode.idx;
             arr.push(node);
-            animations.push(createShiftAnimation(node, newLeftIdx, "shiftStart"))
+            // animations.push(createShiftAnimation(node, newLeftIdx, "shiftStart"))
             animations.push(createShiftAnimation(node, newLeftIdx, "shiftEnd"))
             left.forEach(n => {
                 n.idx++;
