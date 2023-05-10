@@ -5,6 +5,7 @@ import { SortingVisualizer } from './pages';
 function App() {
   return (
     <div className="App">
+    //some comment
       <SortingVisualizer></SortingVisualizer>
     </div>
   );
